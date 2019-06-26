@@ -2,7 +2,7 @@
 
 # tests-buster
 
-#### clear broken tests from your test files at no time
+#### clear broken tests from your test files in no time
 
 the tests-buster will crawl in your test files, wisely analyze your tests and cut out every broken one. get your code ready to take down the pipeline.
 
