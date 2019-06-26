@@ -4,7 +4,8 @@
   "description": "bust broken tests",
   "main": "tests-buster.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "bust": "cp .babelrc.tests-buster.tmpl .babelrc && babel-node tests-buster.js"
   },
   "repository": {
     "type": "git",
