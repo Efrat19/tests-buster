@@ -1,0 +1,23 @@
+{
+  "name": "tests-buster",
+  "version": "1.0.0",
+  "description": "bust broken tests",
+  "main": "tests-buster.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "notnow"
+  },
+  "keywords": [
+    "jest",
+    "clear",
+    "test",
+    "unit",
+    "remove",
+    "broken"
+  ],
+  "author": "Efrat19",
+  "license": "ISC"
+}
