@@ -5,7 +5,14 @@
   "main": "tests-buster.js",
   "scripts": {
     "test": "test",
-    "bust": "babel-node tests-buster.js"
+    "bust": "babel-node tests-buster.js",
+    "prepublish": "babel src --out-dir lib"
+  },
+  "babel": {
+    "presets": ["es2015"],
+    "plugins": [
+      "transform-async-generator-functions"
+      ]
   },
   "repository": {
     "type": "git",
@@ -21,9 +28,17 @@
   ],
   "author": "Efrat19",
   "license": "ISC",
+  "bin": {
+    "tests-buster": "./index.js"
+  },
   "dependencies": {
-    "babel-plugin-transform-async-generator-functions": "^6.24.1",
     "fs": "0.0.1-security",
     "shelljs": "^0.8.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-plugin-transform-async-generator-functions": "^6.24.1"
   }
 }
