@@ -1,11 +1,13 @@
 import fs from 'fs';
 import shelljs from 'shelljs';
-const testsDir = '../personal/frontend/tests/unit/components/personal/campaignList';
+const testsDir = './tests/unit';
+const rootDir = '../personal/frontend';
 const testPattern = /.spec.js$/;
 
 main();
 
 async function main(){
+    console.log(shelljs.cd(rootDir));
     const files = await getTestFiles();
     const eatenTests = await eatTests(files);
     shelljs.echo(`process completed. ${eatenTests} tests busted`);
@@ -73,7 +75,13 @@ function extractTestFrom(fileContent,test) {
 function findTest(errorLine,fileContent) {
     let block = fileContent;
     errorLine.forEach(level => {
-        block = findFullBlock(level,block);
+        const childBlock = findFullBlock(level,block)
+        //if there is only one child in the block
+        // then the parent block should be deleted as well,
+        //if not-
+        if(! isOnlyChild(childBlock,block)){
+            block = childBlock;
+        }
     });
     return block;
 }
@@ -97,13 +105,15 @@ function getEndOfBlockFrom(contentPart){
                 case ')': bracketsCounter--;break;
             }
             finalBlock += char;
-            return !!bracketsCounter // when equals 0 it means the block is done and i want to quit the loop
+            // when equals 0 it means the block
+            // is done and i want to quit the loop
+            return !!bracketsCounter 
         });
     return finalBlock;
 }
 
 function escapeRegExp(string) {
-    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 function escapeUnicode(raw) {
@@ -113,4 +123,9 @@ function escapeUnicode(raw) {
         }
         return char;
     }).join('');
+}
+
+
+function isOnlyChild(child,parent) {
+    
 }
