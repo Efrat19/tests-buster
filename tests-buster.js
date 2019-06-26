@@ -1,13 +1,13 @@
 import fs from 'fs';
 import shelljs from 'shelljs';
-const testsDir = './tests/unit';
+const testsDir = './tests/unit/components/personal/campaignList';
 const rootDir = '../personal/frontend';
 const testPattern = /.spec.js$/;
 
 main();
 
 async function main(){
-    console.log(shelljs.cd(rootDir));
+    shelljs.cd(rootDir);
     const files = await getTestFiles();
     const eatenTests = await eatTests(files);
     shelljs.echo(`process completed. ${eatenTests} tests busted`);
@@ -24,7 +24,7 @@ async function eatTests (testFiles) {
     for await (const file of testFiles) {
         const fileContent = await getContentOf(file);
         let cleanContent = fileContent.toString('utf-8');
-        getErrorLines(getJestStderrFor(file)).forEach(errorLine => {
+        getErrorLines(getJestStderrFor(file)).map(errorLine => {
             cleanContent = getCleanContent(errorLine, cleanContent);
             eatenTests++;
         });
@@ -72,6 +72,17 @@ function extractTestFrom(fileContent,test) {
 }
 
 
+// function findblockToRemove(errorsArray,block) {
+//     const innerBlock = findFullBlock(errorsArray.shift(),block)
+//     if(errorsArray.length){
+//         const blockToRemove = findblockToRemove(errorsArray,innerBlock)
+//         if(isOnlyChild(innerBlock,block)){
+//             return block;
+//         }
+//     }
+//     return innerBlock;
+// }
+
 function findTest(errorLine,fileContent) {
     let block = fileContent;
     errorLine.forEach(level => {
@@ -89,7 +100,7 @@ function findTest(errorLine,fileContent) {
 function findFullBlock(description,content) {
 
     const allowedQuotes = '"\'`';
-    const regex = new RegExp('((describe)|(it)) *\\( *['+allowedQuotes+']('+ escapeRegExp(description)+')['+allowedQuotes+']','u');
+    const regex = new RegExp('((describe)|(it)) *\\( *['+allowedQuotes+']('+ escapeRegExp(description)+')['+allowedQuotes+']','g');
     const blockStart = content && content.match(regex) && content.match(regex)[0] || '';
     const lastPart = content && content.split(blockStart)[1] || ''; //get last part of the content
     return blockStart && lastPart && blockStart + getEndOfBlockFrom(lastPart)
@@ -107,7 +118,7 @@ function getEndOfBlockFrom(contentPart){
             finalBlock += char;
             // when equals 0 it means the block
             // is done and i want to quit the loop
-            return !!bracketsCounter 
+            return !!bracketsCounter
         });
     return finalBlock;
 }
@@ -116,16 +127,12 @@ function escapeRegExp(string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-function escapeUnicode(raw) {
-    return raw && raw.split('').map(char => {
-        if(char.charCodeAt(0) > 255) {
-            return '\\p{'+char+'}';
-        }
-        return char;
-    }).join('');
+function isOnlyChild(child,parent) {
+    return isEmptyBlock(extractTestFrom(parent,child))
 }
 
-
-function isOnlyChild(child,parent) {
-    
+function isEmptyBlock(block) {
+    const allowedQuotes = '"\'`';
+    const regex = new RegExp('((describe)|(it)) *\\( *['+allowedQuotes+']','g');
+    return (block.match(regex) || []).length === 1;
 }
