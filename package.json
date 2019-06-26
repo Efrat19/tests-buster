@@ -5,7 +5,7 @@
   "main": "tests-buster.js",
   "scripts": {
     "test": "test",
-    "bust": "cp .babelrc.tests-buster.tmpl .babelrc && babel-node tests-buster.js"
+    "bust": "babel-node tests-buster.js"
   },
   "repository": {
     "type": "git",
@@ -22,8 +22,8 @@
   "author": "Efrat19",
   "license": "ISC",
   "dependencies": {
+    "babel-plugin-transform-async-generator-functions": "^6.24.1",
     "fs": "0.0.1-security",
-    "jest": "^24.8.0",
     "shelljs": "^0.8.3"
   }
 }

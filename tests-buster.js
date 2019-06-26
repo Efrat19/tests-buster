@@ -1,7 +1,7 @@
 import fs from 'fs';
 import shelljs from 'shelljs';
-
-const testsDir = './tests/unit';
+const testsDir = '../personal/frontend/tests/unit/components/personal/campaignList';
+const testPattern = /.spec.js$/;
 
 main();
 
@@ -14,7 +14,7 @@ async function main(){
 
 async function getTestFiles(){
     return shelljs.find(testsDir).filter(file =>
-        file.match(/.spec.js$/))
+        file.match(testPattern))
 }
 
 async function eatTests (testFiles) {
@@ -32,7 +32,7 @@ async function eatTests (testFiles) {
 }
 
 function getJestStderrFor(file) {
-    const cmd = `npx vue-cli-service test:unit ${file}`;
+    const cmd = `jest ${file}`;
     return shelljs.exec(cmd,{silent:true}).stderr;
 }
 
