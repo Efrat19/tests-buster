@@ -1,12 +1,17 @@
 #! /usr/bin/env node
-var argv = require('minimist')(process.argv.slice(2));
+import Buster from './src/Buster';
+import minimist from 'minimist';
+
+const argv = minimist(process.argv.slice(2));
+
 console.dir(argv);
 console.dir(process.cwd());
 console.log(help());
+// const buster = new Buster();
+// buster.bust();
 
-
-function help(){
-    return `
+function help() {
+  return `
     
 Usage:  tests-buster bust [OPTIONS] [PATH]
 
