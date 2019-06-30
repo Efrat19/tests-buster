@@ -7,7 +7,7 @@ export default class Buster {
     this.sweeper = new Sweeper();
     this.crawler = new Crawler();
     this.scanner = new Scanner(projectDir, testsDir, filePattern);
-    this.testsBusted = 0; //deleted tests counter
+    this.testsBusted = 0; // deleted tests counter
   }
 
   async start() {
@@ -24,11 +24,11 @@ export default class Buster {
     }
   }
 
-  async cleanFile(file){
+  async cleanFile(file) {
     let cleanContent = fileContent.toString('utf-8');
     this.scanner.getErrorsFor(file).map((errorLine) => {
       cleanContent = this.sweeper.getCleanContent(errorLine, cleanContent);
-      this.testsBusted ++ ;
+      this.testsBusted++;
     });
     return cleanContent;
   }

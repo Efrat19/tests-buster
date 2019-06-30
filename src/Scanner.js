@@ -9,19 +9,17 @@ export default class Scanner {
   }
 
   async getTestFiles() {
-    return this.shell.find(this.testsDir).filter(file =>
-         file.match(this.filePattern));
+    return this.shell.find(this.testsDir).filter(file => file.match(this.filePattern));
   }
 
-  getErrorsFor(file){
-      return this.getErrorLines(this.getJestStderrFor(file));
+  getErrorsFor(file) {
+    return this.getErrorLines(this.getJestStderrFor(file));
   }
 
   getErrorLines(stderr) {
     const regex = /\n\n {2}● .*\n\n/g;
     const errorLines = stderr.match(regex) || [];
-    return errorLines.map(line => 
-        line.replace(/\n\n {2}● /, '').replace(/\n\n/, '').split(' › '));
+    return errorLines.map(line => line.replace(/\n\n {2}● /, '').replace(/\n\n/, '').split(' › '));
   }
 
   getJestStderrFor(file) {

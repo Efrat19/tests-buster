@@ -1,6 +1,6 @@
 #! /usr/bin/env node
-import Buster from './src/Buster';
 import minimist from 'minimist';
+import Buster from './src/Buster';
 
 const argv = minimist(process.argv.slice(2));
 
