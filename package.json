@@ -32,9 +32,10 @@
   "author": "Efrat19",
   "license": "ISC",
   "bin": {
-    "tests-buster": "./index.js"
+    "tests-buster": "./src/index.js"
   },
   "dependencies": {
+    "clui": "^0.3.6",
     "fs": "0.0.1-security",
     "minimist": "^1.2.0",
     "shelljs": "^0.8.3"
