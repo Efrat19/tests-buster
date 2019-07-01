@@ -1,9 +1,11 @@
 #! /usr/bin/env node
-// import minimist from 'minimist';
-// import Buster from './Buster';
-// import { version } from './package.json';
+import minimist from 'minimist';
+import Buster from './Buster';
+import { version } from '../package.json';
 
-// const argv = minimist(process.argv.slice(2));
+const argv = minimist(process.argv.slice(2));
+
+
 
 console.log(help());
 // const buster = new Buster();
