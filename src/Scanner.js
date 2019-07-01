@@ -8,8 +8,14 @@ export default class Scanner {
     this.filePattern = filePattern;
   }
 
-  async getTestFiles() {
-    return this.shell.find(this.testsDir).filter(file => file.match(this.filePattern));
+  async getTestFiles(onDiscovery) {
+    let discovered = 0;
+    return this.shell.find(this.testsDir).filter((file) => {
+      if (file.match(this.filePattern)) {
+        onDiscovery && onDiscovery(++discovered);
+        return true;
+      }
+    });
   }
 
   getErrorsFor(file) {

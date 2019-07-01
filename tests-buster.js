@@ -1,7 +1,7 @@
 import fs from 'fs';
 import shelljs from 'shelljs';
 
-const testsDir = './tests/unit/components/personal/campaignList';
+const testsDir = './tests/unit';
 const rootDir = '../personal/frontend';
 const testPattern = /.spec.js$/;
 
