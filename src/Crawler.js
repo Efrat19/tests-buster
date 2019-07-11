@@ -30,7 +30,7 @@ export default class Crawler {
 
   async getContentOf(file) {
     let fileContent = '';
-    const reader = this.sf.createReadStream(file, { encoding: 'utf8' });
+    const reader = this.fs.createReadStream(file, { encoding: 'utf8' });
     for await (const chunk of reader) {
       fileContent += chunk;
     }

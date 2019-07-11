@@ -18,7 +18,7 @@ export default class Buster {
 
   async start() {
     this.logger.startSpinner();
-    const files = await this.scanner.getTestFiles(this.logger.updateSpinner);
+    const files = await this.scanner.getTestFiles(() => this.logger.updateSpinner());
     await this.eatTests(files);
     this.ExitMessage.print(this.testsBusted, this.crawler.removeList);
   }
@@ -26,16 +26,16 @@ export default class Buster {
   async eatTests(testFiles) {
     for await (const file of testFiles) {
       const fileContent = await this.crawler.getContentOf(file);
-      const cleanContent = await this.cleanFile(fileContent);
+      const cleanContent = await this.cleanFile(file, fileContent);
       this.crawler.fixFile(file, cleanContent);
     }
   }
 
-  async cleanFile(file) {
+  async cleanFile(file, fileContent) {
     let cleanContent = fileContent.toString('utf-8');
-    this.scanner.getErrorsFor(file).map((errorLine) => {
+    this.scanner.getErrorsFor(file).map( errorLine => {
       cleanContent = this.sweeper.getCleanContent(errorLine, cleanContent);
-      this.testsBusted++;
+      this.testsBusted += 1;
     });
     return cleanContent;
   }
