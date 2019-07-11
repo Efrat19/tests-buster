@@ -1,11 +1,11 @@
 import shell from 'shelljs';
 
 export default class Scanner {
-  constructor(projectDir = '.', testsDir = '.', filePattern = /.spec.js$/) {
+  constructor(projectDir, testsDir, filePattern) {
     this.shell = shell;
-    this.projectDir = projectDir;
-    this.testsDir = testsDir;
-    this.filePattern = filePattern;
+    this.projectDir = projectDir || '.';
+    this.testsDir = testsDir || '.';
+    this.filePattern = filePattern || /.spec.js$/;
   }
 
   async getTestFiles(onDiscovery) {

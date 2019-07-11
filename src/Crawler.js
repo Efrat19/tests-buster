@@ -1,14 +1,31 @@
 import fs from 'fs';
 
 export default class Crawler {
-  constructor() {
+  constructor(isDry, autoRemove) {
+    this.isDry = isDry || false;
+    this.autoRemove = autoRemove || false;
     this.fs = fs;
+    this.removeList = [];
+  }
+
+  fixFile(file, content) {
+    if (this.isEmpty(content)) {
+      return this.fixEmptyFile(file, content);
+    }
+    return !this.isDry && this.writeContentBackTo(file, content);
+  }
+
+  fixEmptyFile(file) {
+    this.removeList.push(file);
+    return !this.isDry && this.autoRemove && this.fs.delete(file);
   }
 
   writeContentBackTo(file, content) {
-    const writer = this.sf.createWriteStream(file);
-    writer.write(content);
-    writer.end();
+    if (!this.isDry) {
+      const writer = this.sf.createWriteStream(file);
+      writer.write(content);
+      writer.end();
+    }
   }
 
   async getContentOf(file) {
@@ -18,5 +35,10 @@ export default class Crawler {
       fileContent += chunk;
     }
     return fileContent;
+  }
+
+  isEmpty(content) {
+    const regex = new RegExp(`((describe)|(it)) *\\( *[${this.allowedQuotes}]`, 'g');
+    return !(content.match(regex) || []).length;
   }
 }
