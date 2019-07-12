@@ -39,7 +39,10 @@
   "dependencies": {
     "@babel/runtime": "^7.4.5",
     "clui": "^0.3.6",
+    "find": "^0.3.0",
     "fs": "0.0.1-security",
+    "ignore": "^5.1.2",
+    "ignore-walk": "^3.0.1",
     "minimist": "^1.2.0",
     "shelljs": "^0.8.3"
   },

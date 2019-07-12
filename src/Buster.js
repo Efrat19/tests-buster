@@ -12,7 +12,7 @@ export default class Buster {
     this.crawler = new Crawler(isDry);
     this.scanner = new Scanner(projectDir, testsDir, filePattern);
     this.logger = new Logger();
-    this.xxitMessage = new ExitMessage(autoRemove, isDry);
+    this.exitMessage = new ExitMessage(autoRemove, isDry);
     this.testsBusted = 0; // deleted tests counter
   }
 
@@ -20,7 +20,7 @@ export default class Buster {
     this.logger.startSpinner();
     const files = await this.scanner.getTestFiles(() => this.logger.updateSpinner());
     await this.eatTests(files);
-    this.ExitMessage.print(this.testsBusted, this.crawler.removeList);
+    this.exitMessage.print(this.testsBusted, this.crawler.removeList);
   }
 
   async eatTests(testFiles) {

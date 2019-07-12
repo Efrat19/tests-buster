@@ -1,21 +1,25 @@
 import shell from 'shelljs';
+import walk from 'ignore-walk';
 
 export default class Scanner {
   constructor(projectDir, testsDir, filePattern) {
     this.shell = shell;
+    this.walk = new walk.WalkerSync({ignoreFiles:['.busterignore']});
     this.projectDir = projectDir || '.';
     this.testsDir = testsDir || '.';
     this.filePattern = filePattern || /.spec.js$/;
+    this.ignorePattern = /.busterignore$/;
   }
 
   async getTestFiles(onDiscovery) {
     let discovered = 0;
-    return this.shell.find(this.testsDir).filter((file) => {
-      if (file.match(this.filePattern)) {
+    this.walk.start().entries.filter((file) => {
+      // if (file.match(this.filePattern)) {
         onDiscovery && onDiscovery(++discovered);
         return true;
-      }
+      // }
     });
+    return [];
   }
 
   getErrorsFor(file) {
