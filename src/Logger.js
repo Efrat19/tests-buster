@@ -27,7 +27,7 @@ export default class Logger {
   }
 
   updateProgress(current) {
-    console.log(this.progress.update(current, this.progressLength));
+    process.stdout(this.progress.update(current, this.progressLength));
   }
 
   getSpinnerStatus(discoveredFiles = 0) {
