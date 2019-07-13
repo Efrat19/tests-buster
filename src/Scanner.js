@@ -2,26 +2,26 @@ import shell from 'shelljs';
 import walk from 'ignore-walk';
 
 export default class Scanner {
-  constructor(projectDir, testsDir, filePattern) {
+  constructor(path, filePattern) {
     this.shell = shell;
-    this.projectDir = projectDir || '.';
-    this.testsDir = testsDir || '.';
-    this.filePattern = filePattern || /.spec.js$/;
+    this.path = path || '.';
+    this.filePattern = this.getPattern(filePattern);
     this.walk = new walk.WalkerSync({
       ignoreFiles: ['.busterignore'],
-      path: `${this.projectDir}/${this.testsDir}`,
+      path: this.path,
     });
   }
 
   async getTestFiles(onDiscovery) {
-    let discovered = 0;
-    return this.walk.start().result.filter( file => {
+    // let discovered = 0;
+    return this.walk.start().result.filter(file => file.match(this.filePattern));
       // if (file.match(this.filePattern)) {
-        console.log(file);
-        onDiscovery && onDiscovery(++ discovered);
-        return true;
+      // // console.log(file);
+      //   return true;
+      // // return onDiscovery && onDiscovery(++discovered) && true;
       // }
-    });
+      // return false;
+    // });
   }
 
   getErrorsFor(file) {
@@ -35,10 +35,21 @@ export default class Scanner {
   }
 
   getJestStderrFor(file) {
-    this.shell.cd(this.projectDir);
-    const cmd = `./node_modules/.bin/jest ${this.testsDir}/${file}`;
+    this.shell.cd(this.path);
+    const cmd = `./node_modules/.bin/jest ${this.path}/${file}`;
     return this.shell.exec(cmd, { silent: true }).stderr;
   }
 
- 
+  getPattern(filePattern) {
+    if (filePattern) {
+      try {
+        return new RegExp(filePattern);
+      } catch (error) {
+        process.stdout('invalid file pattern:\n');
+        process.stdout(error);
+        process.exit(2);
+      }
+    }
+    return /.spec.js$/;
+  }
 }

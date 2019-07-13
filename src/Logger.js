@@ -8,13 +8,13 @@ export default class Logger {
   }
 
   startSpinner() {
-    this.spinner.start();
+    // this.spinner.start();
   }
 
   updateSpinner(discoveredFiles) {
     // process.stdout.write("\n");
-    // process.stdout.write(this.getSpinnerStatus(discoveredFiles));
-    this.spinner.message = this.getSpinnerStatus(discoveredFiles);
+    process.stdout.write(this.getSpinnerStatus(discoveredFiles));
+    // this.spinner.message = this.getSpinnerStatus(discoveredFiles);
   }
 
   quitSpinner() {
@@ -31,6 +31,6 @@ export default class Logger {
   }
 
   getSpinnerStatus(discoveredFiles = 0) {
-    return `discovering ${discoveredFiles} test files....`;
+    return `discovering ${discoveredFiles} test files....\n`;
   }
 }

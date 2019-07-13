@@ -7,11 +7,12 @@ import ExitMessage from './ExitMessage';
 
 export default class Buster {
   constructor({
-    projectDir, testsDir, filePattern, isDry, autoRemove,
+    path, filePattern, isDry, autoRemove,
   }) {
+    this.path = path || '.';
     this.sweeper = new Sweeper();
     this.crawler = new Crawler(isDry);
-    this.scanner = new Scanner(projectDir, testsDir, filePattern);
+    this.scanner = new Scanner(this.path, filePattern);
     this.logger = new Logger();
     this.exitMessage = new ExitMessage(autoRemove, isDry);
     this.testsBusted = 0; // deleted tests counter
@@ -19,12 +20,13 @@ export default class Buster {
 
   async start() {
     await this.crawler.createIgnoreFile(`${this.projectDir}/${'.busterignore'}`, 'node_modules\n.git');
-    // this.logger.startSpinner();
-    const files = await this.scanner.getTestFiles( discovered => 
-      this.logger.updateSpinner(discovered));
+    this.logger.startSpinner();
+    const files = await this.scanner.getTestFiles(discovered => this.logger.updateSpinner(discovered));
+    this.logger.updateSpinner(files.length);
     // this.logger.quitSpinner();
-    // await this.eatTests(files);
+    await this.eatTests(files);
     this.exitMessage.print(this.testsBusted, this.crawler.removeList);
+    // },1000);
   }
 
   async eatTests(testFiles) {
@@ -37,7 +39,7 @@ export default class Buster {
 
   async cleanFile(file, fileContent) {
     let cleanContent = fileContent.toString('utf-8');
-    this.scanner.getErrorsFor(file).map( errorLine => {
+    this.scanner.getErrorsFor(file).map((errorLine) => {
       cleanContent = this.sweeper.getCleanContent(errorLine, cleanContent);
       this.testsBusted += 1;
     });

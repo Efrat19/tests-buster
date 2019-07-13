@@ -19,9 +19,8 @@ export default class Guide {
       A cli tool for broken tests cleaning
       
       Options:
-        -p, --path               the tests root directory, relative to the project root. Defaults to current location. 
-        -r, --root               The project root directory - where your package.json is. Defaults to current location.
-        -P, --pattern            The test files search pattern. Accepts a js regex, defaults to /.spec.js$/
+        -p, --path               The project root directory - where your package.json is. Defaults to current location.
+        -P, --pattern            The test files search pattern. Accepts a js regex, defaults to ".spec.js$"
         -d, --dry-run            Scan the files without changing them. Run it before the actual slaughter to see how many tests can be busted
         -a  --auto-remove        Automatically remove empty test files
         -v, --version            Print version information and quit.
@@ -37,8 +36,7 @@ export default class Guide {
     return {
       help: args.help,
       version: args.version || args.v,
-      testsDir: args.path || args.p,
-      projectDir: args.root || args.r,
+      path: args.path || args.p,
       filePattern: args.pattern || args.P,
       isDry: args['dry-run'] || args.d,
       autoRemove: args['auto-remove'] || args.a,
