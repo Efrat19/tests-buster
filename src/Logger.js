@@ -12,6 +12,8 @@ export default class Logger {
   }
 
   updateSpinner(discoveredFiles) {
+    // process.stdout.write("\n");
+    // process.stdout.write(this.getSpinnerStatus(discoveredFiles));
     this.spinner.message = this.getSpinnerStatus(discoveredFiles);
   }
 

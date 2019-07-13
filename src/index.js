@@ -7,7 +7,6 @@ const argv = minimist(process.argv.slice(2));
 
 const guide = new Guide();
 const flags = guide.getFlags(argv);
-console.log(flags);
 if (flags.help) {
   guide.printHelp();
   process.exit(0);
@@ -19,5 +18,5 @@ if (flags.version) {
 (async () => {
   const buster = new Buster(flags);
   const code = await buster.start();
-  process.exit(code);
+  // process.exit(code);
 })();

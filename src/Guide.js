@@ -34,7 +34,6 @@ export default class Guide {
   }
 
   getFlags(args) {
-      console.log(args);
     return {
       help: args.help,
       version: args.version || args.v,

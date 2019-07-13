@@ -1,3 +1,4 @@
+
 import Sweeper from './Sweeper';
 import Crawler from './Crawler';
 import Scanner from './Scanner';
@@ -17,9 +18,12 @@ export default class Buster {
   }
 
   async start() {
-    this.logger.startSpinner();
-    const files = await this.scanner.getTestFiles(() => this.logger.updateSpinner());
-    await this.eatTests(files);
+    await this.crawler.createIgnoreFile(`${this.projectDir}/${'.busterignore'}`, 'node_modules\n.git');
+    // this.logger.startSpinner();
+    const files = await this.scanner.getTestFiles( discovered => 
+      this.logger.updateSpinner(discovered));
+    // this.logger.quitSpinner();
+    // await this.eatTests(files);
     this.exitMessage.print(this.testsBusted, this.crawler.removeList);
   }
 

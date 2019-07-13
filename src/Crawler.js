@@ -41,4 +41,14 @@ export default class Crawler {
     const regex = new RegExp(`((describe)|(it)) *\\( *[${this.allowedQuotes}]`, 'g');
     return !(content.match(regex) || []).length;
   }
+
+  async createIgnoreFile(file, content) {
+    try {
+      if (!this.fs.existsSync(file)) {
+        return await this.fs.appendFile(file, content, () => {});
+      }
+    } catch (err) {
+      return console.error(err);
+    }
+  }
 }
