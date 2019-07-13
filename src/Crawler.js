@@ -2,9 +2,10 @@ import fs from 'fs';
 
 export default class Crawler {
   constructor(isDry, autoRemove) {
-    this.isDry = isDry || false;
-    this.autoRemove = autoRemove || false;
+    this.isDry = isDry;
+    this.autoRemove = autoRemove;
     this.fs = fs;
+    this.fsp = fs.promises;
     this.removeList = [];
   }
 
@@ -45,10 +46,14 @@ export default class Crawler {
   async createIgnoreFile(file, content) {
     try {
       if (!this.fs.existsSync(file)) {
-        return await this.fs.appendFile(file, content, () => {});
+        return await this.fsp.appendFile(file, content);
       }
-    } catch (err) {
-      return console.error(err);
+      return true;
+    } catch (error) {
+      process.stdout('unable to create .busterignore file:\n');
+      process.stdout(error);
+      process.exit(2);
+      return false;
     }
   }
 }

@@ -7,9 +7,10 @@ export default class ExitMessage {
   }
 
   print(testsBusted, removeList) {
-    const message = this.isDry ? this.getDryExitMessage(testsBusted, removeList) : this.getExitMessage(testsBusted, removeList);
-    const selfPromotion = '\nThanks for using tests-buster! visit my momepage at https://github.com/efrat19/tests-buster';
-    console.log(message + selfPromotion);
+    const message = this.isDry ? this.getDryExitMessage(testsBusted, removeList)
+      : this.getExitMessage(testsBusted, removeList);
+    const selfPromotion = '\nThanks for using tests-buster! visit my homepage at https://github.com/efrat19/tests-buster';
+    process.stdout(message + selfPromotion);
   }
 
   getDryExitMessage(testsBusted, removeList) {
@@ -21,18 +22,20 @@ export default class ExitMessage {
   }
 
   getExitMessage(testsBusted, removeList) {
-    const jobReport = 'process completed! \n Damage report:';
+    const jobReport = 'process completed!\nDamage report:\n';
     const testsReport = `${testsBusted} broken tests where busted.\n`;
-    const filesReport = removeList.length && this.autoRemove ? this.getFilesReportForAutoRemove(removeList) : this.getFilesReport(removeList);
+    const filesReport = removeList.length && this.autoRemove
+      ? this.getFilesReportForAutoRemove(removeList)
+      : this.getFilesReport(removeList);
     return jobReport + testsReport + filesReport;
   }
 
   getFilesReport(removeList) {
-    return `${removeList} empty test files removed: ${this.getFilesListString(removeList)}`;
+    return `${removeList.length} empty test files should be removed: ${this.getFilesListString(removeList)}`;
   }
 
   getFilesReportForAutoRemove(removeList) {
-    return `${removeList} empty test files should be removed: ${this.getFilesListString(removeList)}`;
+    return `${removeList.length} empty test files removed: ${this.getFilesListString(removeList)}`;
   }
 
   getFilesListString(removeList) {

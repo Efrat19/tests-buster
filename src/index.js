@@ -17,6 +17,6 @@ if (flags.version) {
 }
 (async () => {
   const buster = new Buster(flags);
-  const code = await buster.start();
+  await buster.start();
   // process.exit(code);
 })();

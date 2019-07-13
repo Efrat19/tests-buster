@@ -7,13 +7,13 @@ export default class Guide {
   }
 
   //   printPathError() {
-  //     console.log(`
+  //     process.stdout(`
   //     required parameter PATH is omitted or illegal.`);
   //     this.printHelp();
   //   }
 
   printHelp() {
-    console.log(`
+    process.stdout(`
       Usage:  tests-buster bust [OPTIONS]
       
       A cli tool for broken tests cleaning
@@ -29,7 +29,7 @@ export default class Guide {
   }
 
   printVersion() {
-    console.log(`${this.version}`);
+    process.stdout(`${this.version}`);
   }
 
   getFlags(args) {

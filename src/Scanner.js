@@ -4,23 +4,23 @@ import walk from 'ignore-walk';
 export default class Scanner {
   constructor(path, filePattern) {
     this.shell = shell;
-    this.path = path || '.';
-    this.filePattern = this.getPattern(filePattern);
+    this.path = path;
+    this.filePattern = filePattern;
     this.walk = new walk.WalkerSync({
       ignoreFiles: ['.busterignore'],
       path: this.path,
     });
   }
 
-  async getTestFiles(onDiscovery) {
+  async getTestFiles() {
     // let discovered = 0;
     return this.walk.start().result.filter(file => file.match(this.filePattern));
-      // if (file.match(this.filePattern)) {
-      // // console.log(file);
-      //   return true;
-      // // return onDiscovery && onDiscovery(++discovered) && true;
-      // }
-      // return false;
+    // if (file.match(this.filePattern)) {
+    // // console.log(file);
+    //   return true;
+    // // return onDiscovery && onDiscovery(++discovered) && true;
+    // }
+    // return false;
     // });
   }
 
@@ -38,18 +38,5 @@ export default class Scanner {
     this.shell.cd(this.path);
     const cmd = `./node_modules/.bin/jest ${this.path}/${file}`;
     return this.shell.exec(cmd, { silent: true }).stderr;
-  }
-
-  getPattern(filePattern) {
-    if (filePattern) {
-      try {
-        return new RegExp(filePattern);
-      } catch (error) {
-        process.stdout('invalid file pattern:\n');
-        process.stdout(error);
-        process.exit(2);
-      }
-    }
-    return /.spec.js$/;
   }
 }

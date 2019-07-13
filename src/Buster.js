@@ -1,4 +1,3 @@
-
 import Sweeper from './Sweeper';
 import Crawler from './Crawler';
 import Scanner from './Scanner';
@@ -11,17 +10,17 @@ export default class Buster {
   }) {
     this.path = path || '.';
     this.sweeper = new Sweeper();
-    this.crawler = new Crawler(isDry);
-    this.scanner = new Scanner(this.path, filePattern);
+    this.crawler = new Crawler(isDry || false, autoRemove || false);
+    this.scanner = new Scanner(this.path, this.getFilePattern(filePattern));
     this.logger = new Logger();
-    this.exitMessage = new ExitMessage(autoRemove, isDry);
+    this.exitMessage = new ExitMessage(autoRemove || false, isDry || false);
     this.testsBusted = 0; // deleted tests counter
   }
 
   async start() {
-    await this.crawler.createIgnoreFile(`${this.projectDir}/${'.busterignore'}`, 'node_modules\n.git');
+    await this.crawler.createIgnoreFile(`${this.path}/${'.busterignore'}`, 'node_modules\n.git\n');
     this.logger.startSpinner();
-    const files = await this.scanner.getTestFiles(discovered => this.logger.updateSpinner(discovered));
+    const files = await this.scanner.getTestFiles();
     this.logger.updateSpinner(files.length);
     // this.logger.quitSpinner();
     await this.eatTests(files);
@@ -31,9 +30,9 @@ export default class Buster {
 
   async eatTests(testFiles) {
     for await (const file of testFiles) {
-      const fileContent = await this.crawler.getContentOf(file);
+      const fileContent = await this.crawler.getContentOf(`${this.path}/${file}`);
       const cleanContent = await this.cleanFile(file, fileContent);
-      this.crawler.fixFile(file, cleanContent);
+      this.crawler.fixFile(`${this.path}/${file}`, cleanContent);
     }
   }
 
@@ -44,5 +43,18 @@ export default class Buster {
       this.testsBusted += 1;
     });
     return cleanContent;
+  }
+
+  getFilePattern(filePattern) {
+    if (filePattern) {
+      try {
+        return new RegExp(filePattern);
+      } catch (error) {
+        process.stdout('invalid file pattern:\n');
+        process.stdout(error);
+        process.exit(2);
+      }
+    }
+    return /.spec.js$/;
   }
 }

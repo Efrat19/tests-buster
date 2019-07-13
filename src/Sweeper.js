@@ -42,8 +42,8 @@ export default class Sweeper {
 
   findFullBlock(description, content) {
     const regex = new RegExp(`((describe)|(it)) *\\( *[${this.allowedQuotes}](${this.escapeRegExp(description)})[${this.allowedQuotes}]`, 'g');
-    const blockStart = content && content.match(regex) && content.match(regex)[0] || '';
-    const lastPart = content && content.split(blockStart)[1] || ''; // get last part of the content
+    const blockStart = (content && content.match(regex) && content.match(regex)[0]) || '';
+    const lastPart = (content && content.split(blockStart)[1]) || ''; // get last part of the content
     return blockStart && lastPart && blockStart + this.getEndOfBlockFrom(lastPart);
   }
 
@@ -54,8 +54,9 @@ export default class Sweeper {
     contentPart.split('') // break it to chars
       .every((char) => {
         switch (char) {
-          case '(': bracketsCounter++; break;
-          case ')': bracketsCounter--; break;
+          case '(': bracketsCounter += 1; break;
+          case ')': bracketsCounter -= 1; break;
+          default: break;
         }
         finalBlock += char;
         // when equals 0 it means the block
