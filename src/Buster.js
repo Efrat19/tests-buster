@@ -32,12 +32,14 @@ export default class Buster {
     for await (const file of testFiles) {
       const fileContent = await this.crawler.getContentOf(`${this.path}/${file}`);
       const cleanContent = await this.cleanFile(file, fileContent);
-      this.crawler.fixFile(`${this.path}/${file}`, cleanContent);
+      return this.crawler.fixFile(`${this.path}/${file}`, cleanContent);
     }
+    return true;
   }
 
   async cleanFile(file, fileContent) {
     let cleanContent = fileContent.toString('utf-8');
+    console.log('errors:', this.scanner.getErrorsFor(file));
     this.scanner.getErrorsFor(file).map((errorLine) => {
       cleanContent = this.sweeper.getCleanContent(errorLine, cleanContent);
       this.testsBusted += 1;
@@ -50,8 +52,8 @@ export default class Buster {
       try {
         return new RegExp(filePattern);
       } catch (error) {
-        process.stdout('invalid file pattern:\n');
-        process.stdout(error);
+        process.stdout.write('invalid file pattern:\n');
+        process.stdout.write(error);
         process.exit(2);
       }
     }

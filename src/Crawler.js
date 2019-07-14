@@ -39,7 +39,10 @@ export default class Crawler {
   }
 
   isEmpty(content) {
-    const regex = new RegExp(`((describe)|(it)) *\\( *[${this.allowedQuotes}]`, 'g');
+    const allowedQuotes = '"\'`';
+    const regex = new RegExp(`((describe)|(it)) *\\( *[${allowedQuotes}]`, 'g');
+    console.log('regex:', regex);
+    console.log('match:', content.match(regex));
     return !(content.match(regex) || []).length;
   }
 
@@ -50,8 +53,8 @@ export default class Crawler {
       }
       return true;
     } catch (error) {
-      process.stdout('unable to create .busterignore file:\n');
-      process.stdout(error);
+      process.stdout.write('unable to create .busterignore file:\n');
+      process.stdout.write(error);
       process.exit(2);
       return false;
     }

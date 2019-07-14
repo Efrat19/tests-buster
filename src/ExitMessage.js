@@ -9,8 +9,8 @@ export default class ExitMessage {
   print(testsBusted, removeList) {
     const message = this.isDry ? this.getDryExitMessage(testsBusted, removeList)
       : this.getExitMessage(testsBusted, removeList);
-    const selfPromotion = '\nThanks for using tests-buster! visit my homepage at https://github.com/efrat19/tests-buster';
-    process.stdout(message + selfPromotion);
+    const selfPromotion = '\nThanks for using tests-buster! visit my homepage at https://github.com/efrat19/tests-buster\n';
+    process.stdout.write(message + selfPromotion);
   }
 
   getDryExitMessage(testsBusted, removeList) {
