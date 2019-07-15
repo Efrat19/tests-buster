@@ -3,6 +3,7 @@ import Crawler from './Crawler';
 import Scanner from './Scanner';
 import Logger from './Logger';
 import ExitMessage from './ExitMessage';
+import Output from './Output'; 
 
 export default class Buster {
   constructor({
@@ -13,6 +14,7 @@ export default class Buster {
     this.crawler = new Crawler(isDry || false, autoRemove || false);
     this.scanner = new Scanner(this.path, this.getFilePattern(filePattern));
     this.logger = new Logger();
+    this.output = new Output();
     this.exitMessage = new ExitMessage(autoRemove || false, isDry || false);
     this.testsBusted = 0; // deleted tests counter
   }
@@ -32,6 +34,7 @@ export default class Buster {
     for await (const file of testFiles) {
       const fileContent = await this.crawler.getContentOf(`${this.path}/${file}`);
       const cleanContent = await this.cleanFile(file, fileContent);
+       
       return this.crawler.fixFile(`${this.path}/${file}`, cleanContent);
     }
     return true;
@@ -39,7 +42,6 @@ export default class Buster {
 
   async cleanFile(file, fileContent) {
     let cleanContent = fileContent.toString('utf-8');
-    console.log('errors:', this.scanner.getErrorsFor(file));
     this.scanner.getErrorsFor(file).map((errorLine) => {
       cleanContent = this.sweeper.getCleanContent(errorLine, cleanContent);
       this.testsBusted += 1;
@@ -52,9 +54,7 @@ export default class Buster {
       try {
         return new RegExp(filePattern);
       } catch (error) {
-        process.stdout.write('invalid file pattern:\n');
-        process.stdout.write(error);
-        process.exit(2);
+        this.output.error('invalid file pattern:\n', error, 2);
       }
     }
     return /.spec.js$/;

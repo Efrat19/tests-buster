@@ -1,4 +1,5 @@
 import fs from 'fs';
+import Output from './Output';
 
 export default class Crawler {
   constructor(isDry, autoRemove) {
@@ -7,6 +8,7 @@ export default class Crawler {
     this.fs = fs;
     this.fsp = fs.promises;
     this.removeList = [];
+    this.output = new Output();
   }
 
   fixFile(file, content) {
@@ -16,14 +18,17 @@ export default class Crawler {
     return !this.isDry && this.writeContentBackTo(file, content);
   }
 
-  fixEmptyFile(file) {
+  fixEmptyFile(file, content) {
     this.removeList.push(file);
-    return !this.isDry && this.autoRemove && this.fs.delete(file);
+    if (!this.autoRemove) {
+      this.writeContentBackTo(file, content);
+    }
+    return !this.isDry && this.autoRemove && this.fs.unlinkSync(file);
   }
 
   writeContentBackTo(file, content) {
     if (!this.isDry) {
-      const writer = this.sf.createWriteStream(file);
+      const writer = this.fs.createWriteStream(file);
       writer.write(content);
       writer.end();
     }
@@ -39,10 +44,11 @@ export default class Crawler {
   }
 
   isEmpty(content) {
-    const allowedQuotes = '"\'`';
-    const regex = new RegExp(`((describe)|(it)) *\\( *[${allowedQuotes}]`, 'g');
-    console.log('regex:', regex);
-    console.log('match:', content.match(regex));
+    const allowedQuotes = '"\'`'
+    const regex = new RegExp(`((describe)|(it)|(test)) *\\( *[${allowedQuotes}]`, 'g');
+     
+     
+     
     return !(content.match(regex) || []).length;
   }
 
@@ -53,10 +59,7 @@ export default class Crawler {
       }
       return true;
     } catch (error) {
-      process.stdout.write('unable to create .busterignore file:\n');
-      process.stdout.write(error);
-      process.exit(2);
-      return false;
+      return this.output.error('unable to create .busterignore file:\n', error, 2);
     }
   }
 }

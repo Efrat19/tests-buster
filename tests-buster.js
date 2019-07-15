@@ -97,7 +97,7 @@ function findTest(errorLine, fileContent) {
 
 function findFullBlock(description, content) {
   const allowedQuotes = '"\'`';
-  const regex = new RegExp(`((describe)|(it)) *\\( *[${allowedQuotes}](${escapeRegExp(description)})[${allowedQuotes}]`, 'g');
+  const regex = new RegExp(`((describe)|(it)|(test)) *\\( *[${allowedQuotes}](${escapeRegExp(description)})[${allowedQuotes}]`, 'g');
   const blockStart = content && content.match(regex) && content.match(regex)[0] || '';
   const lastPart = content && content.split(blockStart)[1] || ''; // get last part of the content
   return blockStart && lastPart && blockStart + getEndOfBlockFrom(lastPart);
@@ -131,6 +131,6 @@ function isOnlyChild(child, parent) {
 
 function isEmptyBlock(block) {
   const allowedQuotes = '"\'`';
-  const regex = new RegExp(`((describe)|(it)) *\\( *[${allowedQuotes}]`, 'g');
+  const regex = new RegExp(`((describe)|(it)|(test)) *\\( *[${allowedQuotes}]`, 'g');
   return (block.match(regex) || []).length === 1;
 }

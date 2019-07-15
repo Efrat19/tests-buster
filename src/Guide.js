@@ -1,19 +1,21 @@
 
 import { version } from '../package.json';
+import Output from './Output';
 
 export default class Guide {
   constructor() {
+    this.output = new Output();
     this.version = version;
   }
 
   //   printPathError() {
-  //     process.stdout.write(`
+  //     this.output.log(`
   //     required parameter PATH is omitted or illegal.`);
   //     this.printHelp();
   //   }
 
   printHelp() {
-    process.stdout.write(`
+    this.output.log(`
       Usage:  tests-buster bust [OPTIONS]
       
       A cli tool for broken tests cleaning
@@ -29,7 +31,7 @@ export default class Guide {
   }
 
   printVersion() {
-    process.stdout.write(`${this.version}\n`);
+    this.output.log(`${this.version}\n`);
   }
 
   getFlags(args) {

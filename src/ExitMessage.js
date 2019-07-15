@@ -1,7 +1,8 @@
+import Output from './Output';
 
-
-export default class ExitMessage {
+export default class ExitMessage{
   constructor(autoRemove, isDry) {
+    this.output = new Output();
     this.autoRemove = autoRemove;
     this.isDry = isDry;
   }
@@ -10,7 +11,7 @@ export default class ExitMessage {
     const message = this.isDry ? this.getDryExitMessage(testsBusted, removeList)
       : this.getExitMessage(testsBusted, removeList);
     const selfPromotion = '\nThanks for using tests-buster! visit my homepage at https://github.com/efrat19/tests-buster\n';
-    process.stdout.write(message + selfPromotion);
+    this.output.success(message + selfPromotion);
   }
 
   getDryExitMessage(testsBusted, removeList) {
