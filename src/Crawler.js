@@ -21,26 +21,41 @@ export default class Crawler {
   fixEmptyFile(file, content) {
     this.removeList.push(file);
     if (!this.autoRemove) {
-      this.writeContentBackTo(file, content);
+      return this.writeContentBackTo(file, content);
     }
-    return !this.isDry && this.autoRemove && this.fs.unlinkSync(file);
+    if (!this.isDry && this.autoRemove) {
+      try {
+        return this.fs.unlinkSync(file);
+      } catch (error) {
+        return this.output.error(`unable to delete empty file ${file}`, error, 1);
+      }
+    }
+    return false;
   }
 
   writeContentBackTo(file, content) {
     if (!this.isDry) {
-      const writer = this.fs.createWriteStream(file);
-      writer.write(content);
-      writer.end();
+      try {
+        const writer = this.fs.createWriteStream(file);
+        writer.write(content);
+        writer.end();
+      } catch (error) {
+        this.output.error(`unable to write to file ${file}`, error, 1);
+      }
     }
   }
 
   async getContentOf(file) {
     let fileContent = '';
-    const reader = this.fs.createReadStream(file, { encoding: 'utf8' });
-    for await (const chunk of reader) {
-      fileContent += chunk;
+    try {
+      const reader = this.fs.createReadStream(file, { encoding: 'utf8' });
+      for await (const chunk of reader) {
+        fileContent += chunk;
+      }
+      return fileContent;
+    } catch (error) {
+      return this.output.error(`unable to read file ${file}`, error, 1);
     }
-    return fileContent;
   }
 
   isEmpty(content) {
@@ -50,7 +65,6 @@ export default class Crawler {
   }
 
   async createIgnoreFile(file, content) {
-    this.output.debug('cwd:', process.cwd());
     try {
       if (!this.fs.existsSync(file)) {
         return await this.fsp.appendFile(file, content);
