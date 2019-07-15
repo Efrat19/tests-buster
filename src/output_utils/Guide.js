@@ -16,7 +16,7 @@ export default class Guide {
 
   printHelp() {
     this.output.log(`
-      Usage:  tests-buster bust [OPTIONS]
+      Usage:  tests-buster [OPTIONS]
       
       A cli tool for broken tests cleaning
       
