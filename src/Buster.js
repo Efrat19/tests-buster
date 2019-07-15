@@ -3,7 +3,7 @@ import Crawler from './Crawler';
 import Scanner from './Scanner';
 import Logger from './Logger';
 import ExitMessage from './ExitMessage';
-import Output from './Output'; 
+import Output from './Output';
 
 export default class Buster {
   constructor({
@@ -34,7 +34,6 @@ export default class Buster {
     for await (const file of testFiles) {
       const fileContent = await this.crawler.getContentOf(`${this.path}/${file}`);
       const cleanContent = await this.cleanFile(file, fileContent);
-       
       return this.crawler.fixFile(`${this.path}/${file}`, cleanContent);
     }
     return true;

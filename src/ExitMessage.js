@@ -1,6 +1,6 @@
 import Output from './Output';
 
-export default class ExitMessage{
+export default class ExitMessage {
   constructor(autoRemove, isDry) {
     this.output = new Output();
     this.autoRemove = autoRemove;

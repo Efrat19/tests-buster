@@ -1,5 +1,5 @@
 import { Spinner, Progress } from 'clui';
-import Output from './Output'; 
+import Output from './Output';
 
 export default class Logger {
   constructor() {

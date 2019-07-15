@@ -44,11 +44,8 @@ export default class Crawler {
   }
 
   isEmpty(content) {
-    const allowedQuotes = '"\'`'
+    const allowedQuotes = '"\'`';
     const regex = new RegExp(`((describe)|(it)|(test)) *\\( *[${allowedQuotes}]`, 'g');
-     
-     
-     
     return !(content.match(regex) || []).length;
   }
 

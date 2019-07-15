@@ -16,7 +16,7 @@ export default class Scanner {
     // let discovered = 0;
     return this.walk.start().result.filter(file => file.match(this.filePattern));
     // if (file.match(this.filePattern)) {
-    // //  
+    // //
     //   return true;
     // // return onDiscovery && onDiscovery(++discovered) && true;
     // }
