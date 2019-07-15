@@ -20,7 +20,7 @@ in your root project directory, run:
 
  ```tests-buster```
 
- and i will take care of everything else.
+ I will take care of everything else.
 
 ## Cli Options
 ```
@@ -42,4 +42,4 @@ in your root project directory, run:
 at any level in your project, you can create `.busterignore` files, to omit specific paths from the cleanup process.
 
 :bulb:
-> If no `.busterignore`  file found in the root directory, the buster will create there a default `.busterignore` file, containing `node_modules` and `.git`.
+> If no `.busterignore`  file found in the root directory, the buster will create there a default `.busterignore` file, to exclude `node_modules` and `.git`.
