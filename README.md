@@ -8,17 +8,17 @@ the tests-buster will crawl in your test files, wisely analyze your tests and cu
 
 ## Local installation:
 
-`npm i tests-buster`
+```npm i tests-buster```
 
 ## Global installation:
 
-`npm i -g tests-buster`
+```npm i -g tests-buster```
 
 ## Run:
 
 in your root project directory, run:
 
- `tests-buster`
+ ```tests-buster```
 
  and i will take care of everything else.
 
@@ -37,9 +37,9 @@ in your root project directory, run:
             --help               Display usage and quit.
 ```
 
-## busterignore
+## Buster Ignore
 
-at any level in your project, you can create a `.busterignore` files, to omit specific paths from the cleanup process.
+at any level in your project, you can create `.busterignore` files, to omit specific paths from the cleanup process.
 
 :bulb:
-> If no such file found in the root directory, the buster will create there a default `.busterignore` file, containing `node_modules` and `.git`.
+> If no `.busterignore`  file found in the root directory, the buster will create there a default `.busterignore` file, containing `node_modules` and `.git`.
