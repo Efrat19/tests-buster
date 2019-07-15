@@ -4,7 +4,7 @@
 
 #### clear broken tests from your test files at no time
 
-the tests-buster will crawl in your test files, wisely analyze your tests and cut out every broken one. now your code is ready to take down the pipeline. :crossed_flags:
+the tests-buster will crawl in your test files, wisely analyze your tests and cut out every broken one. now your code is ready to take down the pipeline. :checkered_flag:
 
 ## Local installation:
 
