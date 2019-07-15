@@ -29,8 +29,12 @@ export default class Output {
   }
 
   debug(description, text) {
-      process.stdout.write(this.chalk.bgBlackBright(description));
-      process.stdout.write(this.chalk.bgGreenBright(text));
-      process.stdout.write('\n');
+    process.stdout.write(this.chalk.bgBlackBright(description));
+    process.stdout.write(this.chalk.bgGreenBright(text));
+    process.stdout.write('\n');
+  }
+
+  promotion(text) {
+    process.stdout.write(this.chalk.hex('#99425B').bold(text));
   }
 }
