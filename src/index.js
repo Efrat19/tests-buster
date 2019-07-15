@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 import minimist from 'minimist';
 import Buster from './Buster';
-import Guide from './Guide';
+import Guide from './output_utils/Guide';
 
 const argv = minimist(process.argv.slice(2));
 

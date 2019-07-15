@@ -1,5 +1,5 @@
 import fs from 'fs';
-import Output from './Output';
+import Output from './output_utils/Output';
 
 export default class Crawler {
   constructor(isDry, autoRemove) {

@@ -1,9 +1,9 @@
 import Sweeper from './Sweeper';
 import Crawler from './Crawler';
 import Scanner from './Scanner';
-import Logger from './Logger';
-import ExitMessage from './ExitMessage';
-import Output from './Output';
+import Logger from './output_utils/Logger';
+import ExitMessage from './output_utils/ExitMessage';
+import Output from './output_utils/Output';
 
 export default class Buster {
   constructor({

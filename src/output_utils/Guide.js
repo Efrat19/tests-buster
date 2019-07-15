@@ -1,5 +1,5 @@
 
-import { version } from '../package.json';
+import { version } from '../../package.json';
 import Output from './Output';
 
 export default class Guide {
