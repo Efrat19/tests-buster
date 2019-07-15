@@ -4,21 +4,33 @@
 
 #### clear broken tests from your test files at no time
 
-the tests-buster will crawl in your test files, wisely analyze your tests and cut out every broken one. now your code is ready to take down the pipeline. :checkered_flag:
+the tests-buster will crawl in your test files, wisely analyze your tests and cut out every broken one. now your code is ready to take down the pipeline. :crossed_flags:
+
+## Global installation (recomended, since its a cli tool):
+
+```
+npm i -g tests-buster
+```
 
 ## Local installation:
 
-```npm i tests-buster```
-
-## Global installation:
-
-```npm i -g tests-buster```
+```
+npm i tests-buster
+```
 
 ## Run:
 
-in your root project directory, run:
+In your root project directory, run:
 
- ```tests-buster```
+ ```
+ tests-buster --dry-run
+ ```
+
+ to see how the tests-buster can help you. When you are ready, run 
+
+ ```
+ tests-buster
+ ```
 
  I will take care of everything else.
 
@@ -43,3 +55,11 @@ at any level in your project, you can create `.busterignore` files, to omit spec
 
 :bulb:
 > If no `.busterignore`  file found in the root directory, the buster will create there a default `.busterignore` file, to exclude `node_modules` and `.git`.
+
+## Issues & Proposals
+
+can be filed [here](https://github.com/Efrat19/tests-buster/issues). i will do my best to meet the needs.
+
+### Thanks for using the tests-buster :clap:
+
+<a href='https://ko-fi.com/C0C5Y5NJ' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi2.png?v=2' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
