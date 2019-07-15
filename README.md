@@ -4,17 +4,25 @@
 
 #### clear broken tests from your test files at no time
 
-the tests-buster will crawl in your test files, wisely analyze your tests and cut out every broken one. now your code is ready to take down the pipeline.
+the tests-buster will crawl in your test files, wisely analyze your tests and cut out every broken one. now your code is ready to take down the pipeline. :crossed_flags:
 
-## local installation:
+## Local installation:
 
 `npm i tests-buster`
 
-## global installation:
+## Global installation:
 
 `npm i -g tests-buster`
 
-## cli options
+## Run:
+
+in your root project directory, run:
+
+ `tests-buster`
+
+ and i will take care of everything else.
+
+## Cli Options
 ```
   Usage:  tests-buster [OPTIONS]
       
@@ -29,3 +37,9 @@ the tests-buster will crawl in your test files, wisely analyze your tests and cu
             --help               Display usage and quit.
 ```
 
+## busterignore
+
+at any level in your project, you can create a `.busterignore` files, to omit specific paths from the cleanup process.
+
+:bulb:
+> If no such file found in the root directory, the buster will create there a default `.busterignore` file, containing `node_modules` and `.git`.
