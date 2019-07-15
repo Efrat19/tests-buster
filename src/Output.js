@@ -24,6 +24,13 @@ export default class Output {
   error(text, error, code) {
     process.stdout.write(this.chalk.black.bgRed(text));
     process.stdout.write(this.chalk.red(error));
+    process.stdout.write('\n');
     return code && process.exit(code);
+  }
+
+  debug(description, text) {
+      process.stdout.write(this.chalk.bgBlackBright(description));
+      process.stdout.write(this.chalk.bgGreenBright(text));
+      process.stdout.write('\n');
   }
 }

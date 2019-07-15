@@ -50,6 +50,7 @@ export default class Crawler {
   }
 
   async createIgnoreFile(file, content) {
+    this.output.debug('cwd:', process.cwd());
     try {
       if (!this.fs.existsSync(file)) {
         return await this.fsp.appendFile(file, content);

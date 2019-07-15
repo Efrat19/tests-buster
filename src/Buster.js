@@ -12,7 +12,7 @@ export default class Buster {
     this.path = path || '.';
     this.sweeper = new Sweeper();
     this.crawler = new Crawler(isDry || false, autoRemove || false);
-    this.scanner = new Scanner(this.path, this.getFilePattern(filePattern));
+    this.scanner = new Scanner(this.getFilePattern(filePattern));
     this.logger = new Logger();
     this.output = new Output();
     this.exitMessage = new ExitMessage(autoRemove || false, isDry || false);
@@ -20,7 +20,8 @@ export default class Buster {
   }
 
   async start() {
-    await this.crawler.createIgnoreFile(`${this.path}/${'.busterignore'}`, 'node_modules\n.git\n');
+    process.chdir(this.path);
+    await this.crawler.createIgnoreFile('.busterignore', 'node_modules\n.git\n');
     this.logger.startSpinner();
     const files = await this.scanner.getTestFiles();
     this.logger.updateSpinner(files.length);
@@ -32,9 +33,9 @@ export default class Buster {
 
   async eatTests(testFiles) {
     for await (const file of testFiles) {
-      const fileContent = await this.crawler.getContentOf(`${this.path}/${file}`);
+      const fileContent = await this.crawler.getContentOf(file);
       const cleanContent = await this.cleanFile(file, fileContent);
-      return this.crawler.fixFile(`${this.path}/${file}`, cleanContent);
+      return this.crawler.fixFile(file, cleanContent);
     }
     return true;
   }

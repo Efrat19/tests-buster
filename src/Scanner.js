@@ -2,13 +2,11 @@ import shell from 'shelljs';
 import walk from 'ignore-walk';
 
 export default class Scanner {
-  constructor(path, filePattern) {
+  constructor(filePattern) {
     this.shell = shell;
-    this.path = path;
     this.filePattern = filePattern;
     this.walk = new walk.WalkerSync({
       ignoreFiles: ['.busterignore'],
-      path: this.path,
     });
   }
 
@@ -35,7 +33,7 @@ export default class Scanner {
   }
 
   getJestStderrFor(file) {
-    const cmd = `./node_modules/.bin/jest ${this.path}/${file}`;
+    const cmd = `./node_modules/.bin/jest ${file}`;
     return this.shell.exec(cmd, { silent: true }).stderr;
   }
 }
