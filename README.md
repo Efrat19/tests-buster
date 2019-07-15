@@ -33,7 +33,7 @@ In your root project directory, run:
  tests-buster
  ```
 
- I will take care of everything else.
+ See the options below for customized configuration.
 
 ## Cli Options
 ```
