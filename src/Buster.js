@@ -5,6 +5,8 @@ import Logger from './output_utils/Logger';
 import ExitMessage from './output_utils/ExitMessage';
 import Output from './output_utils/Output';
 
+const {resolve} = require('path');
+
 export default class Buster {
   constructor({
     path, filePattern, isDry, autoRemove,
@@ -12,7 +14,7 @@ export default class Buster {
     this.path = path || '.';
     this.sweeper = new Sweeper();
     this.crawler = new Crawler(isDry || false, autoRemove || false);
-    this.scanner = new Scanner(this.getFilePattern(filePattern));
+    this.scanner = new Scanner(this.getFilePattern(filePattern), resolve(this.path));
     this.logger = new Logger();
     this.output = new Output();
     this.exitMessage = new ExitMessage(autoRemove || false, isDry || false);

@@ -40,6 +40,7 @@
     "@babel/runtime": "^7.4.5",
     "chalk": "^2.4.2",
     "clui": "^0.3.6",
+    "command-exists": "^1.2.8",
     "fs": "0.0.1-security",
     "ignore-walk": "^3.0.1",
     "jest": "^24.8.0",

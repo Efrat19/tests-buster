@@ -2,24 +2,18 @@ import shell from 'shelljs';
 import walk from 'ignore-walk';
 
 export default class Scanner {
-  constructor(filePattern) {
+  constructor(filePattern, path) {
     this.shell = shell;
     this.filePattern = filePattern;
+    this.jest = './node_modules/.bin/jest';
     this.walk = new walk.WalkerSync({
       ignoreFiles: ['.busterignore'],
+      path,
     });
   }
 
   async getTestFiles() {
-    // let discovered = 0;
     return this.walk.start().result.filter(file => file.match(this.filePattern));
-    // if (file.match(this.filePattern)) {
-    // //
-    //   return true;
-    // // return onDiscovery && onDiscovery(++discovered) && true;
-    // }
-    // return false;
-    // });
   }
 
   getErrorsFor(file) {
@@ -33,7 +27,7 @@ export default class Scanner {
   }
 
   getJestStderrFor(file) {
-    const cmd = `./node_modules/.bin/jest ${file}`;
+    const cmd = `${this.jest} ${file}`;
     return this.shell.exec(cmd, { silent: true }).stderr;
   }
 }

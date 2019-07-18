@@ -18,8 +18,8 @@ export default class ExitMessage {
   getDryExitMessage(testsBusted, removeList) {
     const jobReport = 'Dry run completed.\n';
     const testsReport = `${testsBusted} broken tests can be cut off.\n`;
-    const filesReport = removeList.length && `${removeList.length} test files will be emptied. 
-    if you want tests-buster to remove them automatically on the wet run, use the --auto-remove flag\n`;
+    const filesReport = (removeList.length && `${removeList.length} test files will be emptied. 
+    if you want tests-buster to remove them automatically on the wet run, use the --auto-remove flag\n`) || '';
     return jobReport + testsReport + filesReport;
   }
 
