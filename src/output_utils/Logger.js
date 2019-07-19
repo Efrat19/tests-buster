@@ -22,7 +22,7 @@ export default class Logger {
   }
 
   updateProgress(current) {
-    this.output.progress(`working on file ${current} out of ${this.progressLength}`);
+    this.output.progress(`now cleaning file ${current} out of ${this.progressLength}`);
   }
 
   successfullyExit(testsBusted, removeList) {
