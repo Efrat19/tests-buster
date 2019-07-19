@@ -54,5 +54,4 @@ export default class Scanner {
     }
     return /.spec.js$/;
   }
-
 }

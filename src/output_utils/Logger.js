@@ -25,8 +25,8 @@ export default class Logger {
     this.output.progress(`working on file ${current} out of ${this.progressLength}`);
   }
 
-  successfullyExit() {
-    this.exitMessage.print();
+  successfullyExit(testsBusted, removeList) {
+    this.exitMessage.print(testsBusted, removeList);
     process.exit(0);
   }
 }

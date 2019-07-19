@@ -15,17 +15,6 @@ export default class Sweeper {
   }
 
 
-  // findblockToRemove(errorsArray,block) {
-  //     const innerBlock = findFullBlock(errorsArray.shift(),block)
-  //     if(errorsArray.length){
-  //         const blockToRemove = findblockToRemove(errorsArray,innerBlock)
-  //         if(isOnlyChild(innerBlock,block)){
-  //             return block;
-  //         }
-  //     }
-  //     return innerBlock;
-  // }
-
   findTest(errorLine, fileContent) {
     let block = fileContent;
     errorLine.forEach((level) => {

@@ -2,6 +2,7 @@ import Sweeper from './Sweeper';
 import Crawler from './Crawler';
 import Scanner from './Scanner';
 import Logger from './output_utils/Logger';
+import Output from './output_utils/Output';
 
 export default class Buster {
   constructor({
@@ -12,22 +13,20 @@ export default class Buster {
     this.crawler = new Crawler(isDry || false, autoRemove || false);
     this.scanner = new Scanner(filePattern, this.path);
     this.logger = new Logger(autoRemove || false, isDry || false);
+    this.output = new Output();
     this.testsBusted = 0; // deleted tests counter
   }
 
   async start() {
-    process.chdir(this.path);
-    await this.crawler.createIgnoreFile('.busterignore', 'node_modules\n.git\n');
-    this.logger.startSpinner();
-    const onDiscovery = discovered => this.logger.updateSpinner(discovered);
-    const files = await this.scanner.getTestFiles(onDiscovery);
-    this.logger.startProgress(files.length);
+    await this.getReady();
+    const files = await this.discoverFiles();
     await this.eatTests(files);
-    this.exitMessage.print(this.testsBusted, this.crawler.removeList);
+    this.logger.successfullyExit(this.testsBusted, this.crawler.removeList);
   }
 
   async eatTests(testFiles) {
     let index = 1;
+    this.logger.startProgress(testFiles.length);
     for await (const file of testFiles) {
       this.logger.updateProgress(index);
       const fileContent = await this.crawler.getContentOf(file);
@@ -44,5 +43,16 @@ export default class Buster {
       this.testsBusted += 1;
     });
     return cleanContent;
+  }
+
+  async getReady() {
+    process.chdir(this.path);
+    await this.crawler.createIgnoreFile('.busterignore', 'node_modules\n.git\n');
+  }
+
+  async discoverFiles() {
+    this.logger.startSpinner();
+    const onDiscovery = discovered => this.logger.updateSpinner(discovered);
+    return this.scanner.getTestFiles(onDiscovery);
   }
 }
