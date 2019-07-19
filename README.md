@@ -33,7 +33,7 @@ In your root project directory, run:
 
 ## Try an Example
 
-`git clone https://github.com/efrat19/tests-buster.git && cd tests-buster/example`
+`git clone https://github.com/efrat19/tests-buster.git && cd tests-buster/example && npm i`
 
 run `npm run test`. some tests will fail. now run `tests-buster bust` to clean the file, and again `npm run test`
  to observe the change. 
