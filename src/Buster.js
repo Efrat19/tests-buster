@@ -5,7 +5,7 @@ import Logger from './output_utils/Logger';
 import ExitMessage from './output_utils/ExitMessage';
 import Output from './output_utils/Output';
 
-const {resolve} = require('path');
+const { resolve } = require('path');
 
 export default class Buster {
   constructor({
@@ -25,19 +25,21 @@ export default class Buster {
     process.chdir(this.path);
     await this.crawler.createIgnoreFile('.busterignore', 'node_modules\n.git\n');
     this.logger.startSpinner();
-    const files = await this.scanner.getTestFiles();
-    this.logger.updateSpinner(files.length);
-    // this.logger.quitSpinner();
+    const onDiscovery = discovered => this.logger.updateSpinner(discovered);
+    const files = await this.scanner.getTestFiles(onDiscovery);
+    this.logger.startProgress(files.length);
     await this.eatTests(files);
     this.exitMessage.print(this.testsBusted, this.crawler.removeList);
-    // },1000);
   }
 
   async eatTests(testFiles) {
+    let index = 1;
     for await (const file of testFiles) {
+      this.logger.updateProgress(index);
       const fileContent = await this.crawler.getContentOf(file);
       const cleanContent = await this.cleanFile(file, fileContent);
-      return this.crawler.fixFile(file, cleanContent);
+      this.crawler.fixFile(file, cleanContent);
+      index += 1;
     }
     return true;
   }
@@ -49,16 +51,5 @@ export default class Buster {
       this.testsBusted += 1;
     });
     return cleanContent;
-  }
-
-  getFilePattern(filePattern) {
-    if (filePattern) {
-      try {
-        return new RegExp(filePattern);
-      } catch (error) {
-        this.output.error('invalid file pattern:\n', error, 2);
-      }
-    }
-    return /.spec.js$/;
   }
 }

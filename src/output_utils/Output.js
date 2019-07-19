@@ -31,11 +31,21 @@ export default class Output {
 
   debug(description, text) {
     process.stdout.write(this.chalk.bgBlackBright(description));
-    process.stdout.write(this.chalk.bgGreenBright(text));
+    process.stdout.write(this.chalk.bgGreenBright.black(text));
     process.stdout.write('\n');
   }
 
   promotion(text) {
     process.stdout.write(this.chalk.hex('#99425B').bold(text));
+  }
+
+  progress(text) {
+    process.stdout.clearLine();
+    process.stdout.cursorTo(0);
+    this.info(text);
+  }
+
+  newLine() {
+    process.stdout.write('\n');
   }
 }

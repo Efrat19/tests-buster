@@ -8,12 +8,6 @@ export default class Guide {
     this.version = version;
   }
 
-  //   printPathError() {
-  //     this.output.log(`
-  //     required parameter PATH is omitted or illegal.`);
-  //     this.printHelp();
-  //   }
-
   printHelp() {
     this.output.log(`
       Usage:  tests-buster [OPTIONS]
@@ -32,16 +26,5 @@ export default class Guide {
 
   printVersion() {
     this.output.log(`${this.version}\n`);
-  }
-
-  getFlags(args) {
-    return {
-      help: args.help,
-      version: args.version || args.v,
-      path: args.path || args.p,
-      filePattern: args.pattern || args.P,
-      isDry: args['dry-run'] || args.d,
-      autoRemove: args['auto-remove'] || args.a,
-    };
   }
 }

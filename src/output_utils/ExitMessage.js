@@ -10,7 +10,8 @@ export default class ExitMessage {
   print(testsBusted, removeList) {
     const message = this.isDry ? this.getDryExitMessage(testsBusted, removeList)
       : this.getExitMessage(testsBusted, removeList);
-    const selfPromotion = '\nThanks for using tests-buster! visit my homepage at https://github.com/efrat19/tests-buster\n';
+    const selfPromotion = 'Thanks for using tests-buster! visit my homepage at https://github.com/efrat19/tests-buster\n';
+    this.output.newLine();
     this.output.success(message);
     this.output.promotion(selfPromotion);
   }
@@ -32,14 +33,14 @@ export default class ExitMessage {
   }
 
   getFilesReport(removeList) {
-    return `${removeList.length} empty test files should be removed: ${this.getFilesListString(removeList)}`;
+    return `${removeList.length} empty test files should be removed: ${this.getFilesListString(removeList)}\n`;
   }
 
   getFilesReportForAutoRemove(removeList) {
-    return `${removeList.length} empty test files removed: ${this.getFilesListString(removeList)}`;
+    return `${removeList.length} empty test files removed: ${this.getFilesListString(removeList)}\n`;
   }
 
   getFilesListString(removeList) {
-    return removeList.length ? `\n${removeList.join('\n')}\n` : '';
+    return removeList.length ? `${removeList.join('\n')}\n` : '';
   }
 }

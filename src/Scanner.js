@@ -12,8 +12,16 @@ export default class Scanner {
     });
   }
 
-  async getTestFiles() {
-    return this.walk.start().result.filter(file => file.match(this.filePattern));
+  async getTestFiles(onDiscovery = () => {}) {
+    let counter = 0;
+    return this.walk.start().result.filter((file) => {
+      if (file.match(this.filePattern)) {
+        counter += 1;
+        onDiscovery(counter);
+        return true;
+      }
+      return false;
+    });
   }
 
   getErrorsFor(file) {

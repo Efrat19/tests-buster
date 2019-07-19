@@ -1,38 +1,25 @@
-import { Spinner, Progress } from 'clui';
 import Output from './Output';
 
 export default class Logger {
   constructor() {
     this.output = new Output();
-    this.spinner = new Spinner(this.getSpinnerStatus(), ['W', 'M']);
-    this.progress = new Progress();
     this.progressLength = 0;
   }
 
   startSpinner() {
-    // this.spinner.start();
+    this.output.newLine();
   }
 
-  updateSpinner(discoveredFiles) {
-    // process.stdout.write("\n");
-    this.output.info(this.getSpinnerStatus(discoveredFiles));
-    // this.spinner.message = this.getSpinnerStatus(discoveredFiles);
-  }
-
-  quitSpinner() {
-    this.spinner.stop();
+  updateSpinner(discoveredFiles = 0) {
+    this.output.progress(`discovering ${discoveredFiles} test files....`);
   }
 
   startProgress(length) {
     this.progressLength = length;
-    this.updateProgress(0);
+    this.output.newLine();
   }
 
   updateProgress(current) {
-    this.output.info(this.progress.update(current, this.progressLength));
-  }
-
-  getSpinnerStatus(discoveredFiles = 0) {
-    return `discovering ${discoveredFiles} test files....\n`;
+    this.output.progress(`working on file ${current} out of ${this.progressLength}`);
   }
 }

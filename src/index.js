@@ -3,10 +3,17 @@ import minimist from 'minimist';
 import Buster from './Buster';
 import Guide from './output_utils/Guide';
 
-const argv = minimist(process.argv.slice(2));
+const args = minimist(process.argv.slice(2));
 
 const guide = new Guide();
-const flags = guide.getFlags(argv);
+const flags = {
+  help: args.help,
+  version: args.version || args.v,
+  path: args.path || args.p,
+  filePattern: args.pattern || args.P,
+  isDry: args['dry-run'] || args.d,
+  autoRemove: args['auto-remove'] || args.a,
+};
 if (flags.help) {
   guide.printHelp();
   process.exit(0);
@@ -15,8 +22,5 @@ if (flags.version) {
   guide.printVersion();
   process.exit(0);
 }
-(async () => {
-  const buster = new Buster(flags);
-  await buster.start();
-  // process.exit(code);
-})();
+const buster = new Buster(flags);
+buster.start();
