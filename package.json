@@ -2,12 +2,8 @@
   "name": "tests-buster",
   "version": "1.0.0",
   "description": "clear broken tests from your test files at no time",
-  "main": "tests-buster.js",
+  "main": "./lib/index.js",
   "scripts": {
-    "test": "test",
-    "bust": "babel src --out-dir lib && tests-buster",
-    "bust:dev": "babel-node tests-buster.js",
-    "bust:offline": "npm run prepublish && node lib/index.js",
     "lint": "eslint . --fix",
     "prepublish": "babel src --out-dir lib"
   },
@@ -39,8 +35,6 @@
   "dependencies": {
     "@babel/runtime": "^7.4.5",
     "chalk": "^2.4.2",
-    "clui": "^0.3.6",
-    "command-exists": "^1.2.8",
     "fs": "0.0.1-security",
     "ignore-walk": "^3.0.1",
     "jest": "^24.8.0",
