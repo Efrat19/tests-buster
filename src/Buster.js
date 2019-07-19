@@ -2,10 +2,6 @@ import Sweeper from './Sweeper';
 import Crawler from './Crawler';
 import Scanner from './Scanner';
 import Logger from './output_utils/Logger';
-import ExitMessage from './output_utils/ExitMessage';
-import Output from './output_utils/Output';
-
-const { resolve } = require('path');
 
 export default class Buster {
   constructor({
@@ -14,10 +10,8 @@ export default class Buster {
     this.path = path || '.';
     this.sweeper = new Sweeper();
     this.crawler = new Crawler(isDry || false, autoRemove || false);
-    this.scanner = new Scanner(this.getFilePattern(filePattern), resolve(this.path));
-    this.logger = new Logger();
-    this.output = new Output();
-    this.exitMessage = new ExitMessage(autoRemove || false, isDry || false);
+    this.scanner = new Scanner(filePattern, this.path);
+    this.logger = new Logger(autoRemove || false, isDry || false);
     this.testsBusted = 0; // deleted tests counter
   }
 
@@ -41,7 +35,6 @@ export default class Buster {
       this.crawler.fixFile(file, cleanContent);
       index += 1;
     }
-    return true;
   }
 
   async cleanFile(file, fileContent) {

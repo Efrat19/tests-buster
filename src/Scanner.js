@@ -1,15 +1,20 @@
 import shell from 'shelljs';
 import walk from 'ignore-walk';
+import Output from './output_utils/Output';
+
+const { resolve } = require('path');
+
 
 export default class Scanner {
   constructor(filePattern, path) {
     this.shell = shell;
-    this.filePattern = filePattern;
+    this.filePattern = this.validatedPattern(filePattern);
     this.jest = './node_modules/.bin/jest';
     this.walk = new walk.WalkerSync({
       ignoreFiles: ['.busterignore'],
-      path,
+      path: resolve(path),
     });
+    this.output = new Output();
   }
 
   async getTestFiles(onDiscovery = () => {}) {
@@ -38,4 +43,16 @@ export default class Scanner {
     const cmd = `${this.jest} ${file}`;
     return this.shell.exec(cmd, { silent: true }).stderr;
   }
+
+  validatedPattern(filePattern) {
+    if (filePattern) {
+      try {
+        return new RegExp(filePattern);
+      } catch (error) {
+        this.output.error('invalid file pattern:\n', error, 2);
+      }
+    }
+    return /.spec.js$/;
+  }
+
 }

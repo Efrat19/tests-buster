@@ -1,9 +1,11 @@
 import Output from './Output';
+import ExitMessage from './ExitMessage';
 
 export default class Logger {
-  constructor() {
+  constructor(autoRemove, isDry) {
     this.output = new Output();
     this.progressLength = 0;
+    this.exitMessage = new ExitMessage(autoRemove, isDry);
   }
 
   startSpinner() {
@@ -21,5 +23,10 @@ export default class Logger {
 
   updateProgress(current) {
     this.output.progress(`working on file ${current} out of ${this.progressLength}`);
+  }
+
+  successfullyExit() {
+    this.exitMessage.print();
+    process.exit(0);
   }
 }
