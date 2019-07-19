@@ -2,3 +2,4 @@ node_modules
 lib
 tests-buster.js
 example/example.spec.js
+dependencyGraph.js

@@ -18,10 +18,14 @@ export default class Buster {
   }
 
   async start() {
-    await this.getReady();
-    const files = await this.discoverFiles();
-    await this.eatTests(files);
-    this.logger.successfullyExit(this.testsBusted, this.crawler.removeList);
+    try {
+      await this.getReady();
+      const files = await this.discoverFiles();
+      await this.eatTests(files);
+      this.logger.successfullyExit(this.testsBusted, this.crawler.removeList);
+    } catch (error) {
+      this.output.error('tests-buster is having a problem:', error, 1);
+    }
   }
 
   async eatTests(testFiles) {
@@ -31,7 +35,7 @@ export default class Buster {
       this.logger.updateProgress(index);
       const fileContent = await this.crawler.getContentOf(file);
       const cleanContent = await this.cleanFile(file, fileContent);
-      this.crawler.fixFile(file, cleanContent);
+      await this.crawler.fixFile(file, cleanContent);
       index += 1;
     }
   }

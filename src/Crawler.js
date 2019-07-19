@@ -1,6 +1,8 @@
 import fs from 'fs';
 import Output from './output_utils/Output';
 
+const { promisify } = require('util');
+
 export default class Crawler {
   constructor(isDry, autoRemove) {
     this.isDry = isDry;
@@ -9,16 +11,17 @@ export default class Crawler {
     this.fsp = fs.promises;
     this.removeList = [];
     this.output = new Output();
+    this.writeFile = promisify(this.fs.writeFile);
   }
 
-  fixFile(file, content) {
+  async fixFile(file, content) {
     if (this.isEmpty(content)) {
       return this.fixEmptyFile(file, content);
     }
-    return !this.isDry && this.writeContentBackTo(file, content);
+    return this.writeContentBackTo(file, content);
   }
 
-  fixEmptyFile(file, content) {
+  async fixEmptyFile(file, content) {
     this.removeList.push(file);
     if (!this.autoRemove) {
       return this.writeContentBackTo(file, content);
@@ -33,12 +36,10 @@ export default class Crawler {
     return false;
   }
 
-  writeContentBackTo(file, content) {
+  async writeContentBackTo(file, content) {
     if (!this.isDry) {
       try {
-        const writer = this.fs.createWriteStream(file);
-        writer.write(content);
-        writer.end();
+        await this.writeFile(file, content);
       } catch (error) {
         this.output.error(`unable to write to file ${file}`, error, 1);
       }

@@ -5,7 +5,8 @@
   "main": "./lib/index.js",
   "scripts": {
     "lint": "eslint . --fix",
-    "prepublish": "babel src --out-dir lib"
+    "prepublish": "babel src --out-dir lib",
+    "draw": "node ./dependencyGraph.js"
   },
   "babel": {
     "presets": [
@@ -50,7 +51,9 @@
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.18.0",
-    "pre-commit": "^1.2.2"
+    "madge": "^3.4.4",
+    "pre-commit": "^1.2.2",
+    "treeify": "^1.1.0"
   },
   "pre-commit": [
     "lint"
