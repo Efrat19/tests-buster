@@ -15,31 +15,32 @@ recomended, since its a cli tool:
 npm i -g tests-buster
 ```
 
-## Local installation:
-
-```
-npm i tests-buster
-```
-
 ## Run:
 
 In your root project directory, run:
 
  ```
- tests-buster --dry-run
+ tests-buster bust --dry-run
  ```
 
  to see how the tests-buster can help you. When you are ready, run 
 
  ```
- tests-buster
+ tests-buster bust
  ```
 
  See the options below for customized configuration.
 
+ ## Try an Example
+
+`git clone https://github.com/efrat19/tests-buster.git && cd tests-buster/example`
+
+run `npm run test`. some tests will fail. now run `tests-buster bust` to clean the file, and again `npm run test`
+ to observe the change. 
+
 ## Cli Options
 ```
-  Usage:  tests-buster [OPTIONS]
+  Usage:  tests-buster bust [OPTIONS]
       
       A cli tool for broken tests cleaning
       

@@ -10,7 +10,7 @@ export default class Guide {
 
   printHelp() {
     this.output.log(`
-      Usage:  tests-buster [OPTIONS]
+      Usage:  tests-buster bust [OPTIONS]
       
       A cli tool for broken tests cleaning
       
@@ -20,11 +20,15 @@ export default class Guide {
         -d, --dry-run            Scan the files without changing them. Run it before the actual slaughter to see how many tests can be busted
         -a  --auto-remove        Automatically remove empty test files
         -v, --version            Print version information and quit.
-            --help               Display usage and quit.
-            `);
+            --help               Display usage and quit.\n`);
   }
 
   printVersion() {
     this.output.log(`${this.version}\n`);
+  }
+
+  unknownCommand(command) {
+    this.output.warning(`unknown command ${command}.`);
+    this.printHelp();
   }
 }
