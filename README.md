@@ -31,7 +31,7 @@ In your root project directory, run:
 
  See the options below for customized configuration.
 
- ## Try an Example
+## Try an Example
 
 `git clone https://github.com/efrat19/tests-buster.git && cd tests-buster/example`
 
