@@ -28,7 +28,7 @@ export default class Guide {
   }
 
   unknownCommand(command) {
-    this.output.warning(`unknown command ${command}.`);
+    this.output.warning(`unknown command "${command || ''}".`);
     this.printHelp();
   }
 }

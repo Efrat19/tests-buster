@@ -1,6 +1,6 @@
 {
   "name": "tests-buster",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "clear broken tests from your test files at no time",
   "main": "./lib/index.js",
   "scripts": {
@@ -34,9 +34,7 @@
     "tests-buster": "./lib/index.js"
   },
   "dependencies": {
-    "@babel/runtime": "^7.4.5",
     "chalk": "^2.4.2",
-    "fs": "0.0.1-security",
     "ignore-walk": "^3.0.1",
     "jest": "^24.8.0",
     "minimist": "^1.2.0",
@@ -48,6 +46,7 @@
     "@babel/node": "^7.4.5",
     "@babel/plugin-transform-runtime": "^7.4.4",
     "@babel/preset-env": "^7.4.5",
+    "@babel/runtime": "^7.4.5",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.18.0",

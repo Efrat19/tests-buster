@@ -5,7 +5,8 @@ export default class Logger {
   constructor(autoRemove, isDry) {
     this.output = new Output();
     this.progressLength = 0;
-    this.exitMessage = new ExitMessage(autoRemove, isDry);
+    this.isDry = isDry;
+    this.exitMessage = new ExitMessage(autoRemove, this.isDry);
   }
 
   startSpinner() {
@@ -22,7 +23,8 @@ export default class Logger {
   }
 
   updateProgress(current) {
-    this.output.progress(`now cleaning file ${current} out of ${this.progressLength}`);
+    const action = this.isDry ? 'reading' : 'cleaning';
+    this.output.progress(`now ${action} file ${current} out of ${this.progressLength}`);
   }
 
   successfullyExit(testsBusted, removeList) {
