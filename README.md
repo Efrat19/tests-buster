@@ -4,7 +4,7 @@
 
 #### clear broken tests from your test files at no time
 
-[![Known Vulnerabilities](https://snyk.io/test/github/efrat19/tests-buster/badge.svg)] (https://img.shields.io/jsdelivr/npm/hd/tests-buter.svg)
+[![Known Vulnerabilities](https://snyk.io/test/github/efrat19/tests-buster/badge.svg)] ![](https://img.shields.io/jsdelivr/npm/hd/tests-buter.svg)
 
 the tests-buster will crawl in your test files, wisely analyze your tests and cut out every broken one. now your code is ready to take down the pipeline. :checkered_flag:
 
