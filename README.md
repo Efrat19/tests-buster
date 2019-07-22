@@ -3,7 +3,9 @@
 # tests-buster
 
 #### clear broken tests from your test files at no time
-
+![version](https://img.shields.io/npm/v/tests-buster.svg)
+![size](https://img.shields.io/bundlephobia/min/lib/tests-buster/1.1.5.svg)
+![license](https://img.shields.io/npm/l/tests-buster.svg)
 ![downloads](https://img.shields.io/jsdelivr/npm/hd/tests-buter.svg)
 
 the tests-buster will crawl in your test files, wisely analyze your tests and cut out every broken one. now your code is ready to take down the pipeline. :checkered_flag:
