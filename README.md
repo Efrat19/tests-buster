@@ -2,7 +2,7 @@
 
 # tests-buster
 
-#### clear broken tests from your test files at no time
+#### fix tests / the wicked way :smiling_imp:
 ![version](https://img.shields.io/npm/v/tests-buster.svg)
 ![size](https://img.shields.io/bundlephobia/min/lib/tests-buster/1.1.5.svg)
 ![license](https://img.shields.io/npm/l/tests-buster.svg)
