@@ -10,7 +10,7 @@
 
 the tests-buster will crawl in your test files, wisely analyze your tests and cut out every broken one. now your code is ready to take down the pipeline. :checkered_flag:
 
-## Installation:
+## Install:
 ```
 npm i -g tests-buster
 ```
