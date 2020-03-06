@@ -1,4 +1,5 @@
 import chalk from 'chalk';
+var readline = require('readline');
 
 export default class Output {
   constructor() {
@@ -40,9 +41,8 @@ export default class Output {
   }
 
   progress(text) {
-    process.stdout.clearLine();
-    process.stdout.cursorTo(0);
-    this.info(text);
+    readline.cursorTo(process.stdout, 0);
+    process.stdout.write(this.info(text));
   }
 
   newLine() {
