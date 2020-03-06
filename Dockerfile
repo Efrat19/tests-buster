@@ -1,3 +1,3 @@
-FROM node:lts-alpine as dist-builder
+FROM node:lts-alpine
 
 RUN npm i -g tests-buster
