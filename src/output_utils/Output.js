@@ -1,5 +1,6 @@
 import chalk from 'chalk';
-var readline = require('readline');
+
+const readline = require('readline');
 
 export default class Output {
   constructor() {
