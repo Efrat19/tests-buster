@@ -41,7 +41,7 @@ export default class Output {
   }
 
   progress(text) {
-    readline.cursorTo(process.stdout, 0);
+    readline.cursorTo(process.stdout, 0, "");
     process.stdout.write(this.info(text));
   }
 
