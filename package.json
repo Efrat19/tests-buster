@@ -1,6 +1,6 @@
 {
   "name": "tests-buster",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "clear broken tests from your test files at no time",
   "main": "./lib/index.js",
   "scripts": {
