@@ -1,0 +1,13 @@
+name: test action
+on: [push]
+jobs:
+  clean:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: clean tests
+      uses: efrat19/tests-buster-github-action@master
+      with:
+        path: example
+        dry_run: true
+        help: true
