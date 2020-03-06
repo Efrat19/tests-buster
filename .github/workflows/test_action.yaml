@@ -9,4 +9,3 @@ jobs:
       uses: efrat19/tests-buster-github-action@master
       with:
         path: example
-        dry_run: true
