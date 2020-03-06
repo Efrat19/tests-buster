@@ -18,14 +18,14 @@ export default class Buster {
   }
 
   async start() {
-    try {
+//     try {
       await this.getReady();
       const files = await this.discoverFiles();
       await this.eatTests(files);
       this.logger.successfullyExit(this.testsBusted, this.crawler.removeList);
-    } catch (error) {
-      this.output.error('tests-buster is having a problem:', error, 1);
-    }
+//     } catch (error) {
+//       this.output.error('tests-buster is having a problem:', error, 1);
+//     }
   }
 
   async eatTests(testFiles) {
