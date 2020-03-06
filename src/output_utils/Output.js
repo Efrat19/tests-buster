@@ -43,9 +43,8 @@ export default class Output {
 
   progress(text) {
     typeof process.stdout.clearLine === 'function' && process.stdout.clearLine();
-    process.stdout.cursorTo(0);
+    typeof process.stdout.cursorTo === 'function' && process.stdout.cursorTo(0);
     this.info(text);
-    readline.cursorTo(process.stdout(this.info(text)), 0);
   }
 
   newLine() {
