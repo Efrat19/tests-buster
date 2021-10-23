@@ -1,12 +1,13 @@
-{   
+{
   "name": "tests-buster",
   "version": "1.1.12",
   "description": "clear broken tests from your test files at no time",
   "main": "./lib/index.js",
   "scripts": {
     "lint": "eslint . --fix",
-    "prepublish": "babel src --out-dir lib",
-    "draw": "node ./dependencyGraph.js"
+    "prepublish": "npm run snyk-protect && babel src --out-dir lib",
+    "draw": "node ./dependencyGraph.js",
+    "snyk-protect": "snyk-protect"
   },
   "babel": {
     "presets": [
@@ -39,7 +40,8 @@
     "jest": "^24.8.0",
     "minimist": "^1.2.0",
     "shelljs": "^0.8.3",
-    "@babel/runtime": "^7.4.5"
+    "@babel/runtime": "^7.4.5",
+    "@snyk/protect": "latest"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
@@ -56,5 +58,6 @@
   },
   "pre-commit": [
     "lint"
-  ]
+  ],
+  "snyk": true
 }
